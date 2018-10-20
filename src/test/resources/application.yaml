@@ -1,0 +1,21 @@
+budget:
+  chassis:
+    http-logging:
+      enabled: true
+  baseUrl:
+    gateway: "https://konradboniecki.com.pl"
+    accountManagement: "http://localhost:10000"
+    mail: "http://localhost:10000"
+spring:
+  application.name: password-management
+  cloud:
+    config:
+      enabled: false
+  zipkin:
+    enabled: false
+  jpa:
+    open-in-view: false
+  security:
+    user:
+      name: "testUserName"
+      password: "testUserPassword"
