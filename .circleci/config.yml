@@ -13,7 +13,7 @@ docker_java_11: &docker_java_11
     JVM_OPTS: -Xmx3200m
     TERM: dumb
 orbs:
-  pipeline-template: micro/pipeline-template@0.1.3
+  pipeline-template: milczek/pipeline-template@0.1.4
 version: 2.1
 workflows:
   version: 2
@@ -65,6 +65,9 @@ jobs:
           paths:
             - ~/.m2
           key: m2-{{ checksum "pom.xml" }}
+      - run:
+          name: Analyze on SonarCloud
+          command: mvn verify sonar:sonar -s .circleci/settings.xml
       - run:
           name: Build and push docker image
           command: |
