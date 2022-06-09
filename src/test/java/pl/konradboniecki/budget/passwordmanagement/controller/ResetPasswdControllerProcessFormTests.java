@@ -26,10 +26,12 @@ import static pl.konradboniecki.budget.passwordmanagement.model.ViewTemplate.LOS
         webEnvironment = MOCK,
         properties = "spring.cloud.config.enabled=false"
 )
-public class ResetPasswdControllerProcessFormTests {
+class ResetPasswdControllerProcessFormTests {
 
-    @Autowired private ResetPasswdController controller;
-    @MockBean private FormHandler formHandler;
+    @Autowired
+    private ResetPasswdController controller;
+    @MockBean
+    private FormHandler formHandler;
 
     private NewPasswordForm validForm;
     private BindingResult bindingResult;
@@ -37,7 +39,7 @@ public class ResetPasswdControllerProcessFormTests {
     private String BASE_URL;
 
     @BeforeAll
-    public void setUp() {
+    void setUp() {
         String passwd = "password";
         validForm = new NewPasswordForm();
         validForm.setEmail("email@adress.com");
@@ -49,7 +51,7 @@ public class ResetPasswdControllerProcessFormTests {
 
     @Test
     @DisplayName("Return form view if form is invalid")
-    public void givenInvalidForm_whenProcessForm_thenReturnFormView() throws Exception {
+    void givenInvalidForm_whenProcessForm_thenReturnFormView() throws Exception {
         // Given:
         NewPasswordForm validForm = this.validForm;
         when(bindingResult.hasErrors()).thenReturn(true);
@@ -61,7 +63,7 @@ public class ResetPasswdControllerProcessFormTests {
 
     @Test
     @DisplayName("Return form view with error flag if repeated password does not match")
-    public void givenInvalidRepeatedPasswd_whenProcessForm_thenReturnFormViewWithFailFlag() throws Exception {
+    void givenInvalidRepeatedPasswd_whenProcessForm_thenReturnFormViewWithFailFlag() throws Exception {
         // Given:
         NewPasswordForm validForm = new NewPasswordForm();
         validForm.setPassword("123");
@@ -70,12 +72,12 @@ public class ResetPasswdControllerProcessFormTests {
         // When:
         ModelAndView modelAndView = controller.processForm(validForm, bindingResult);
         // Then:
-        assertThat(modelAndView.getModel().get("repeatedPasswordFailure")).isEqualTo(true);
+        assertThat(modelAndView.getModel()).containsEntry("repeatedPasswordFailure", true);
     }
 
     @Test
     @DisplayName("Return ModelAndView with redirect to main page")
-    public void givenValidParams_whenProcessForm_thenRedirectToMainPAge() throws Exception {
+    void givenValidParams_whenProcessForm_thenRedirectToMainPAge() throws Exception {
         // Given:
         NewPasswordForm validForm = this.validForm;
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -88,7 +90,7 @@ public class ResetPasswdControllerProcessFormTests {
 
     @Test
     @DisplayName("Form has been handled")
-    public void givenValidParams_whenProcessForm_thenFormHasBeenHandled() throws Exception {
+    void givenValidParams_whenProcessForm_thenFormHasBeenHandled() throws Exception {
         // Given:
         NewPasswordForm validForm = this.validForm;
         when(bindingResult.hasErrors()).thenReturn(false);

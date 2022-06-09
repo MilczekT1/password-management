@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class NewPasswordFormTest {
+class NewPasswordFormTest {
 
     @Test
     @DisplayName("All properties are null by default")
-    public void givenNoArguments_whenCreateObj_thenAllPropertiesAreNulls() {
+    void givenNoArguments_whenCreateObj_thenAllPropertiesAreNulls() {
         // When:
         NewPasswordForm newPasswordForm = new NewPasswordForm();
         assertAll(
@@ -24,7 +24,7 @@ public class NewPasswordFormTest {
 
     @Test
     @DisplayName("Throw NullPointerException if any password is null")
-    public void givenNullPasswords_whenCompare_thenThrowNullPointerException(){
+    void givenNullPasswords_whenCompare_thenThrowNullPointerException() {
         // Given:
         NewPasswordForm newPasswordForm1 = new NewPasswordForm();
         NewPasswordForm newPasswordForm2 = new NewPasswordForm();
@@ -40,7 +40,7 @@ public class NewPasswordFormTest {
 
     @Test
     @DisplayName("Log message if any password is null")
-    public void givenNullPasswords_whenCompare_thenLogMessage(){
+    void givenNullPasswords_whenCompare_thenLogMessage() {
         // Given:
         NewPasswordForm newPasswordForm1 = new NewPasswordForm();
         NewPasswordForm newPasswordForm2 = new NewPasswordForm();
@@ -60,7 +60,7 @@ public class NewPasswordFormTest {
 
     @Test
     @DisplayName("Return true if password match repeated password")
-    public void givenTheSameRepeatedPassword_whenCheckIfPasswordsAreEqual_thenReturnTrue(){
+    void givenTheSameRepeatedPassword_whenCheckIfPasswordsAreEqual_thenReturnTrue() {
         // Given:
         NewPasswordForm newPasswordForm = new NewPasswordForm();
         // When:
@@ -72,7 +72,7 @@ public class NewPasswordFormTest {
 
     @Test
     @DisplayName("Return false if password doesn't match repeated password")
-    public void givenDifferentSameRepeatedPassword_whenCheckIfPasswordsAreEqual_thenReturnFalse(){
+    void givenDifferentSameRepeatedPassword_whenCheckIfPasswordsAreEqual_thenReturnFalse() {
         // Given:
         NewPasswordForm newPasswordForm = new NewPasswordForm();
         // When:

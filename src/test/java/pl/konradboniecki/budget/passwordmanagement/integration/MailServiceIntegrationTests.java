@@ -10,14 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
 import pl.konradboniecki.budget.passwordmanagement.model.json.Account;
 import pl.konradboniecki.budget.passwordmanagement.model.json.ActivationLinkRequest;
 import pl.konradboniecki.budget.passwordmanagement.service.MailClient;
 
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties.StubsMode.REMOTE;
@@ -37,7 +35,7 @@ import static pl.konradboniecki.budget.passwordmanagement.integration.MailServic
         ids = {STUB_GROUP_ID + ":" + STUB_ARTIFACT_ID + ":" + STUB_VERSION + ":stubs:9000"},
         stubsMode = REMOTE
 )
-public class MailServiceIntegrationTests {
+class MailServiceIntegrationTests {
 
     public static final String STUB_GROUP_ID = "pl.konradboniecki.budget";
     public static final String STUB_ARTIFACT_ID = "mail";
@@ -52,7 +50,7 @@ public class MailServiceIntegrationTests {
     private String resetCode;
 
     @BeforeAll
-    public void setUp(){
+    void setUp() {
         mailClient.setResetPasswordMailUrl("http://localhost:9000/api/mail/v1/password-reset");
         validAccount = new Account()
                 .setEmail("test@mail.com")
@@ -64,13 +62,13 @@ public class MailServiceIntegrationTests {
 
     @Test
     @DisplayName("Check mail service integration")
-    public void givenValidInput_whenRequestMailService_thenNoException(){
+    void givenValidInput_whenRequestMailService_thenNoException() {
         //Given:
         ActivationLinkRequest activationLinkRequest = new ActivationLinkRequest()
                 .setAccount(validAccount)
                 .setResetCode(resetCode);
         // When:
-        Throwable throwable = catchThrowable(()-> mailClient.requestMailWithResetCode(activationLinkRequest));
+        Throwable throwable = catchThrowable(() -> mailClient.requestMailWithResetCode(activationLinkRequest));
         // Then:
         assertThat(throwable).isNull();
     }

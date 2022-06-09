@@ -42,7 +42,7 @@ import static pl.konradboniecki.budget.passwordmanagement.integration.AccountSer
         ids = {STUB_GROUP_ID + ":" + STUB_ARTIFACT_ID + ":" + STUB_VERSION + ":stubs:9001"},
         stubsMode = REMOTE
 )
-public class AccountServiceIntegrationTests {
+class AccountServiceIntegrationTests {
 
     public static final String STUB_GROUP_ID = "pl.konradboniecki.budget";
     public static final String STUB_ARTIFACT_ID = "account-management";
@@ -56,14 +56,14 @@ public class AccountServiceIntegrationTests {
     private NewPasswordRequestService newPasswordRequestService;
 
     @BeforeAll
-    public void setUp() {
+    void setUp() {
         accountFacade.setFindAccountURL("http://localhost:9001/api/account-mgt/v1/accounts");
         doNothing().when(newPasswordRequestService).saveNewPasswordRequest(any());
     }
 
     @Test
     @DisplayName("Find existing account by email - status code")
-    public void givenExistingEmail_whenFindByEmail_thenReturn200(){
+    void givenExistingEmail_whenFindByEmail_thenReturn200() {
         // Given:
         String email = "existing_email@password_management.com";
         // When:
@@ -74,32 +74,33 @@ public class AccountServiceIntegrationTests {
 
     @Test
     @DisplayName("Find existing account by email - body")
-    public void givenExistingEmail_whenFindByEmail_thenGetAccountFromBody() throws IOException {
+    void givenExistingEmail_whenFindByEmail_thenGetAccountFromBody() throws IOException {
         // Given:
         String email = "existing_email@password_management.com";
         // When:
         ResponseEntity<String> accountResponse = accountFacade.getAccountByEmail(email);
         // Then:
         Map<String, Object> map = new ObjectMapper()
-                .readValue(accountResponse.getBody(), new TypeReference<Map<String,Object>>(){});
+                .readValue(accountResponse.getBody(), new TypeReference<Map<String, Object>>() {
+                });
         Assertions.assertAll(
-                () -> assertThat(map.get("email").toString()).isEqualTo(email),
-                () -> assertThat(map.get("firstName").toString()).isEqualTo("testFirstName"),
-                () -> assertThat(map.get("lastName").toString()).isEqualTo("testLastName"),
-                () -> assertThat(map.get("id")).isEqualTo("d19391f3-66e0-434c-ba2b-01d64cf37a95")
+                () -> assertThat(map.get("email")).hasToString(email),
+                () -> assertThat(map.get("firstName")).hasToString("testFirstName"),
+                () -> assertThat(map.get("lastName")).hasToString("testLastName"),
+                () -> assertThat(map).containsEntry("id", "d19391f3-66e0-434c-ba2b-01d64cf37a95")
         );
     }
 
     @Test
     @DisplayName("Find not existing account by email - exception")
-    public void givenNotExistingEmail_whenFindByEmail_thenExceptionIsThrown(){
+    void givenNotExistingEmail_whenFindByEmail_thenExceptionIsThrown() {
         // Given:
         String email = "not_existing_email@password_management.com";
         // When:
-        ResponseStatusException throwable = catchThrowableOfType(()-> accountFacade.getAccountByEmail(email), ResponseStatusException.class);
+        ResponseStatusException throwable = catchThrowableOfType(() -> accountFacade.getAccountByEmail(email), ResponseStatusException.class);
         // Then:
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(ResponseStatusException.class);
+        assertThat(throwable).isNotNull()
+                .isInstanceOf(ResponseStatusException.class);
         assertThat(throwable.getStatus().is5xxServerError()).isTrue();
         assertThat(throwable.getReason()).contains(email);
     }

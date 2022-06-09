@@ -30,7 +30,7 @@ import static pl.konradboniecki.chassis.tools.RestTools.defaultGetHTTPHeaders;
         properties = "spring.cloud.config.enabled=false"
 )
 //TODO: contract tests
-public class FormHandlerTest extends TestBase {
+class FormHandlerTest extends TestBase {
 
     @Autowired
     private FormHandler formHandler;
@@ -47,7 +47,7 @@ public class FormHandlerTest extends TestBase {
     private String mailBaseUrl;
 
     @BeforeAll
-    public void setUpClass() {
+    void setUpClass() {
         validForm = new NewPasswordForm();
         validForm.setEmail("test@email.com");
         validForm.setPassword("passwd");
@@ -60,7 +60,7 @@ public class FormHandlerTest extends TestBase {
     }
 
     @BeforeEach
-    public void setUpTest() throws FileNotFoundException {
+    void setUpTest() throws FileNotFoundException {
         String accountResponse = getFileContentAsString("controller/AccountResponse", "json");
 
         HttpHeaders headers = defaultGetHTTPHeaders();
@@ -79,7 +79,7 @@ public class FormHandlerTest extends TestBase {
 
     @Test
     @DisplayName("Requested account")
-    public void givenValidForm_whenHandlingForm_thenRequestedAccount() throws Exception {
+    void givenValidForm_whenHandlingForm_thenRequestedAccount() throws Exception {
         // Given:
         NewPasswordForm newPasswordForm = validForm;
         // When:
@@ -94,19 +94,19 @@ public class FormHandlerTest extends TestBase {
 
     @Test
     @DisplayName("NewPasswordRequest saved in database")
-    public void givenValidForm_whenHandlingForm_thenSavedRequestToDatabase() throws Exception {
+    void givenValidForm_whenHandlingForm_thenSavedRequestToDatabase() throws Exception {
         // Given:
         NewPasswordForm newPasswordForm = validForm;
         // When:
         formHandler.handleForm(newPasswordForm);
         // Then:
-        verify(newPasswordRequestService, times (1))
+        verify(newPasswordRequestService, times(1))
                 .saveNewPasswordRequest(any(NewPasswordRequest.class));
     }
 
     @Test
     @DisplayName("Requested email with reset code")
-    public void givenValidForm_whenHandlingForm_thenEmailRequestHasBeenInvoked() throws Exception {
+    void givenValidForm_whenHandlingForm_thenEmailRequestHasBeenInvoked() throws Exception {
         // Given:
         when(restTemplate.exchange(any(String.class), eq(HttpMethod.POST), any(HttpEntity.class), eq(String.class), any(HttpHeaders.class))).thenReturn(ResponseEntity.ok().build());
 
@@ -123,7 +123,7 @@ public class FormHandlerTest extends TestBase {
 
     @Test
     @DisplayName("Logged all steps during form processing.")
-    public void givenValidForm_whenHandlingForm_thenLogAllSteps() throws Exception {
+    void givenValidForm_whenHandlingForm_thenLogAllSteps() throws Exception {
         // Given:
         NewPasswordForm newPasswordForm = validForm;
         // When:

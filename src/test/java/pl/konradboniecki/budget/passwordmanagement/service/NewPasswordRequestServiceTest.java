@@ -16,7 +16,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         webEnvironment = NONE,
         properties = "spring.cloud.config.enabled=false"
 )
-public class NewPasswordRequestServiceTest {
+class NewPasswordRequestServiceTest {
 
     @MockBean
     private NewPasswordRequestRepository newPasswordRequestRepository;
@@ -24,7 +24,7 @@ public class NewPasswordRequestServiceTest {
     private NewPasswordRequestService newPasswordRequestService;
 
     @Test
-    public void givenNewEntity_whenSaveEntity_thenSavedWithRepository(){
+    void givenNewEntity_whenSaveEntity_thenSavedWithRepository() {
         // Given:
         NewPasswordRequest newPasswordRequest = new NewPasswordRequest();
         when(newPasswordRequestRepository.save(newPasswordRequest))
