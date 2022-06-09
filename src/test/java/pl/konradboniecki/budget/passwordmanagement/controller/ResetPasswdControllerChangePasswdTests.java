@@ -41,7 +41,7 @@ import static org.springframework.http.HttpStatus.FOUND;
         webEnvironment = RANDOM_PORT,
         properties = "spring.cloud.config.enabled=false"
 )
-public class ResetPasswdControllerChangePasswdTests extends TestBase {
+class ResetPasswdControllerChangePasswdTests extends TestBase {
 
     @Autowired
     private TestRestTemplate rest;
@@ -69,7 +69,7 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
     private HttpEntity<?> httpEntity;
 
     @BeforeAll
-    public void setUp() {
+    void setUp() {
         baseUrl = "http://localhost:" + port;
         notExistingId = UUID.randomUUID().toString();
         existingId = UUID.randomUUID().toString();
@@ -91,7 +91,7 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
 
     @Test
     @DisplayName("Log Error when invalid Id")
-    public void givenNotExistingId_whenChangePassword_thenLogError() {
+    void givenNotExistingId_whenChangePassword_thenLogError() {
         // Given
         when(newPasswordRequestRepository.findById(notExistingId))
                 .thenReturn(Optional.empty());
@@ -105,7 +105,7 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
 
     @Test
     @DisplayName("Redirect when invalid Id")
-    public void givenNotExistingId_whenChangePassword_thenRedirectedWith302() {
+    void givenNotExistingId_whenChangePassword_thenRedirectedWith302() {
         // Given
         when(newPasswordRequestRepository.findById(notExistingId))
                 .thenReturn(Optional.empty());
@@ -118,7 +118,7 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
 
     @Test
     @DisplayName("Log invalid reset code")
-    public void givenExistingIdAndInvalidResetCode_whenChangePassword_thenLogError(){
+    void givenExistingIdAndInvalidResetCode_whenChangePassword_thenLogError() {
         // Given
         when(newPasswordRequestRepository.findById(existingId))
                 .thenReturn(Optional.of(newPasswordRequestEntity));
@@ -132,7 +132,7 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
 
     @Test
     @DisplayName("Redirect to main page when invalid reset code")
-    public void givenExistingIdAndInvalidResetCode_whenChangePassword_thenRedirectedWith302(){
+    void givenExistingIdAndInvalidResetCode_whenChangePassword_thenRedirectedWith302() {
         // Given
         when(newPasswordRequestRepository.findById(existingId))
                 .thenReturn(Optional.of(newPasswordRequestEntity));
@@ -145,7 +145,7 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
 
     @Test
     @DisplayName("New password request is removed on valid params")
-    public void givenExistingIdAndValidResetCode_whenChangePassword_thenNewPasswordRequestIsRemoved() {
+    void givenExistingIdAndValidResetCode_whenChangePassword_thenNewPasswordRequestIsRemoved() {
         // Given
         when(newPasswordRequestRepository.findById(existingId))
                 .thenReturn(Optional.of(newPasswordRequestEntity));
@@ -159,15 +159,11 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
     @Test
     @DisplayName("Modify Password Request is sent to account service")
     @Disabled("TODO: use contract testing to support those tests. ")
-    public void givenExistingIdAndValidResetCode_whenChangePassword_thenChangePasswordRequestIsSent() {
+    void givenExistingIdAndValidResetCode_whenChangePassword_thenChangePasswordRequestIsSent() {
         // Given
         ArgumentCaptor<String> baseUrlArg = ArgumentCaptor.forClass(String.class);
         when(newPasswordRequestRepository.findById(existingId))
                 .thenReturn(Optional.of(newPasswordRequestEntity));
-//        doNothing().when(restTemplate).exchange(baseUrlArg.capture(),
-//                eq(HttpMethod.PUT),
-//                any(HttpEntity.class),
-//                eq(String.class));
         String url = baseUrl + "/api/reset-password/" + existingId + "/" + validResetCode;
 
         // When
@@ -179,7 +175,7 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
 
     @Test
     @DisplayName("Logs are populated when changed password")
-    public void givenExistingIdAndValidResetCode_whenChangePassword_thenLogsArePopulated(){
+    void givenExistingIdAndValidResetCode_whenChangePassword_thenLogsArePopulated() {
         // Given
         when(newPasswordRequestRepository.findById(existingId))
                 .thenReturn(Optional.of(newPasswordRequestEntity));
@@ -196,7 +192,7 @@ public class ResetPasswdControllerChangePasswdTests extends TestBase {
 
     @Test
     @DisplayName("Redirect when changed password")
-    public void givenExistingIdAndValidResetCode_whenChangePassword_thenRedirectedWith302(){
+    void givenExistingIdAndValidResetCode_whenChangePassword_thenRedirectedWith302() {
         // Given
         when(newPasswordRequestRepository.findById(existingId))
                 .thenReturn(Optional.of(newPasswordRequestEntity));

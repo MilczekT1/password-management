@@ -26,7 +26,7 @@ import static pl.konradboniecki.budget.passwordmanagement.model.ViewTemplate.LOS
 public class ResetPasswdController {
 
     @Value("${budget.baseUrl.gateway}")
-    private String BASE_URL;
+    private String gatewayUrl;
     private NewPasswordRequestRepository newPasswordRequestRepository;
     private RestTemplate restTemplate;
     private AccountFacade accountFacade;
@@ -46,7 +46,7 @@ public class ResetPasswdController {
     public ModelAndView changePassword(@PathVariable("id") String id,
                                        @PathVariable("resetCode") String resetCodeFromUrl) {
         accountFacade.changePassword(resetCodeFromUrl, id);
-        return new ModelAndView("redirect:" + BASE_URL);
+        return new ModelAndView("redirect:" + gatewayUrl);
     }
 
     @PostMapping(value = "/request")
@@ -60,6 +60,6 @@ public class ResetPasswdController {
 
         formHandler.handleForm(newPasswordForm);
 
-        return new ModelAndView("redirect:" + BASE_URL);
+        return new ModelAndView("redirect:" + gatewayUrl);
     }
 }

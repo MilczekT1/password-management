@@ -24,7 +24,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         webEnvironment = RANDOM_PORT,
         properties = "spring.cloud.config.enabled=false"
 )
-public class FormControllerTest {
+class FormControllerTest {
 
     @Autowired
     private TestRestTemplate rest;
@@ -33,14 +33,14 @@ public class FormControllerTest {
     private String baseUrl;
 
     @BeforeAll
-    public void beforeAll(){
+    void beforeAll() {
         baseUrl = "http://localhost:" + port;
         assertThat(rest.getForEntity(baseUrl + "/actuator/health", String.class).getStatusCodeValue()).isEqualTo(200);
     }
 
     @Test
     @DisplayName("GET /api/reset-password/form uses valid template")
-    public void givenHealthyApp_whenRequestForm_thenReturnNewPasswordFormView() {
+    void givenHealthyApp_whenRequestForm_thenReturnNewPasswordFormView() {
         // Given:
         String url = baseUrl + "/api/reset-password/form";
         // When:

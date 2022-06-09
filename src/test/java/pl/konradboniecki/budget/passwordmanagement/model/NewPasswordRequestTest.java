@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class NewPasswordRequestTest {
+class NewPasswordRequestTest {
 
     private NewPasswordForm newPasswordForm;
 
     @BeforeAll
-    public void setUp(){
+    void setUp() {
         newPasswordForm = new NewPasswordForm();
         newPasswordForm.setEmail("test@mail.com");
         newPasswordForm.setPassword("pass");
