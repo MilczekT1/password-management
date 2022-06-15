@@ -38,7 +38,7 @@ import static pl.konradboniecki.budget.passwordmanagement.integration.AccountSer
         }
 )
 @AutoConfigureStubRunner(
-        repositoryRoot = "http://161.97.176.83:5001/repository/maven-public/",
+        repositoryRoot = "http://konradboniecki.com.pl:5001/repository/maven-public/",
         ids = {STUB_GROUP_ID + ":" + STUB_ARTIFACT_ID + ":" + STUB_VERSION + ":stubs:9001"},
         stubsMode = REMOTE
 )
@@ -46,7 +46,7 @@ class AccountServiceIntegrationTests {
 
     public static final String STUB_GROUP_ID = "pl.konradboniecki.budget";
     public static final String STUB_ARTIFACT_ID = "account-management";
-    public static final String STUB_VERSION = "0.7.0-SNAPSHOT";
+    public static final String STUB_VERSION = "0.8.0-SNAPSHOT";
 
     @Autowired
     private RestTemplate restTemplate;
@@ -65,7 +65,7 @@ class AccountServiceIntegrationTests {
     @DisplayName("Find existing account by email - status code")
     void givenExistingEmail_whenFindByEmail_thenReturn200() {
         // Given:
-        String email = "existing_email@password_management.com";
+        String email = "existing_email@password-management.com";
         // When:
         ResponseEntity<String> accountResponse = accountFacade.getAccountByEmail(email);
         // Then:
@@ -76,7 +76,7 @@ class AccountServiceIntegrationTests {
     @DisplayName("Find existing account by email - body")
     void givenExistingEmail_whenFindByEmail_thenGetAccountFromBody() throws IOException {
         // Given:
-        String email = "existing_email@password_management.com";
+        String email = "existing_email@password-management.com";
         // When:
         ResponseEntity<String> accountResponse = accountFacade.getAccountByEmail(email);
         // Then:
