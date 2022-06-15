@@ -31,7 +31,7 @@ import static pl.konradboniecki.budget.passwordmanagement.integration.MailServic
         }
 )
 @AutoConfigureStubRunner(
-        repositoryRoot = "http://161.97.176.83:5001/repository/maven-public/",
+        repositoryRoot = "http://konradboniecki.com.pl:5001/repository/maven-public/",
         ids = {STUB_GROUP_ID + ":" + STUB_ARTIFACT_ID + ":" + STUB_VERSION + ":stubs:9000"},
         stubsMode = REMOTE
 )
@@ -39,7 +39,7 @@ class MailServiceIntegrationTests {
 
     public static final String STUB_GROUP_ID = "pl.konradboniecki.budget";
     public static final String STUB_ARTIFACT_ID = "mail";
-    public static final String STUB_VERSION = "0.7.0-SNAPSHOT";
+    public static final String STUB_VERSION = "0.8.0-SNAPSHOT";
 
     @Autowired
     private RestTemplate restTemplate;
