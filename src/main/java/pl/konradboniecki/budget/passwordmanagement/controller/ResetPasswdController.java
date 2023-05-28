@@ -1,5 +1,6 @@
 package pl.konradboniecki.budget.passwordmanagement.controller;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,6 @@ import pl.konradboniecki.budget.passwordmanagement.service.AccountFacade;
 import pl.konradboniecki.budget.passwordmanagement.service.FormHandler;
 import pl.konradboniecki.budget.passwordmanagement.service.NewPasswordRequestRepository;
 import pl.konradboniecki.budget.passwordmanagement.service.NewPasswordRequestService;
-
-import javax.validation.Valid;
 
 import static pl.konradboniecki.budget.passwordmanagement.model.ViewTemplate.LOST_PASSWORD_FORM;
 

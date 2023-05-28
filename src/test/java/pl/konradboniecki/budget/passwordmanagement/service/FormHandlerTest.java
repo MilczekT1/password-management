@@ -16,12 +16,12 @@ import pl.konradboniecki.chassis.tools.ChassisSecurityBasicAuthHelper;
 
 import java.io.FileNotFoundException;
 
+import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.TestInstance.Lifecycle;
 import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
-import static pl.konradboniecki.chassis.tools.RestTools.defaultGetHTTPHeaders;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(Lifecycle.PER_CLASS)
@@ -63,7 +63,8 @@ class FormHandlerTest extends TestBase {
     void setUpTest() throws FileNotFoundException {
         String accountResponse = getFileContentAsString("controller/AccountResponse", "json");
 
-        HttpHeaders headers = defaultGetHTTPHeaders();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
         when(restTemplate.exchange(findAccountByEmailUrl,
                 HttpMethod.GET,

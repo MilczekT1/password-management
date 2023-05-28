@@ -27,7 +27,8 @@ import static pl.konradboniecki.budget.passwordmanagement.integration.MailServic
         webEnvironment = RANDOM_PORT,
         properties = {
                 "spring.cloud.config.enabled=false",
-                "stubrunner.cloud.loadbalancer.enabled=false"
+                "stubrunner.cloud.loadbalancer.enabled=false",
+                "stubrunner.cloud.delegate.enabled=true"
         }
 )
 @AutoConfigureStubRunner(
