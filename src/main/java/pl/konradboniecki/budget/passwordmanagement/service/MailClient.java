@@ -1,6 +1,5 @@
 package pl.konradboniecki.budget.passwordmanagement.service;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,8 @@ import pl.konradboniecki.budget.passwordmanagement.model.json.ActivationLinkRequ
 import pl.konradboniecki.budget.passwordmanagement.model.json.ResetPasswordMailRequest;
 import pl.konradboniecki.chassis.tools.ChassisSecurityBasicAuthHelper;
 
-import static pl.konradboniecki.chassis.tools.RestTools.defaultPostHTTPHeaders;
+import static java.util.Collections.singletonList;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Data
 @Slf4j
@@ -45,14 +45,16 @@ public class MailClient {
                 .resetCode(alr.getResetCode())
                 .build();
 
-        HttpHeaders headers = defaultPostHTTPHeaders();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(APPLICATION_JSON);
+        headers.setAccept(singletonList(APPLICATION_JSON));
         headers.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
         try {
             restTemplate.exchange(resetPasswordMailUrl,
                     HttpMethod.POST,
                     new HttpEntity<>(resetPasswordMailRequest, headers),
                     String.class);
-        } catch(HttpClientErrorException e){
+        } catch (HttpClientErrorException e) {
             String email = alr.getAccount().getEmail();
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR, "Email has not been set for " + email, e);

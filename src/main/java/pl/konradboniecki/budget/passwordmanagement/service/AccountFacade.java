@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import pl.konradboniecki.chassis.tools.ChassisSecurityBasicAuthHelper;
 
-import static pl.konradboniecki.chassis.tools.RestTools.defaultGetHTTPHeaders;
+import static java.util.Collections.singletonList;
 
 @Data
 @Service
@@ -31,8 +31,9 @@ public class AccountFacade {
         accountPasswordService.changePassword(resetCodeFromUrl, id);
     }
 
-    public ResponseEntity<String> getAccountByEmail(String email){
-        HttpHeaders headers = defaultGetHTTPHeaders();
+    public ResponseEntity<String> getAccountByEmail(String email) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
         String queryParameters = "?findBy=email";
         try {
@@ -40,7 +41,7 @@ public class AccountFacade {
                     HttpMethod.GET,
                     new HttpEntity<>(headers),
                     String.class);
-        } catch(HttpClientErrorException e){
+        } catch (HttpClientErrorException e) {
             ResponseStatusException ex = new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch account with email " + email, e);
             ex.printStackTrace();
             throw ex;
