@@ -8,11 +8,11 @@ budget:
     mail: "http://localhost:10000"
 spring:
   application.name: password-management
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     config:
       enabled: false
-  zipkin:
-    enabled: false
   jpa:
     open-in-view: false
   security:

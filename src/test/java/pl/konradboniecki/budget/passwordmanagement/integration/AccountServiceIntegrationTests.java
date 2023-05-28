@@ -34,7 +34,8 @@ import static pl.konradboniecki.budget.passwordmanagement.integration.AccountSer
         webEnvironment = RANDOM_PORT,
         properties = {
                 "spring.cloud.config.enabled=false",
-                "stubrunner.cloud.loadbalancer.enabled=false"
+                "stubrunner.cloud.loadbalancer.enabled=false",
+                "stubrunner.cloud.delegate.enabled=true"
         }
 )
 @AutoConfigureStubRunner(
@@ -101,7 +102,7 @@ class AccountServiceIntegrationTests {
         // Then:
         assertThat(throwable).isNotNull()
                 .isInstanceOf(ResponseStatusException.class);
-        assertThat(throwable.getStatus().is5xxServerError()).isTrue();
+        assertThat(throwable.getStatusCode().is5xxServerError()).isTrue();
         assertThat(throwable.getReason()).contains(email);
     }
 }
